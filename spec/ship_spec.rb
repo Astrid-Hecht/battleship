@@ -12,7 +12,7 @@ RSpec.describe Ship do
         expect(@cruiser.name).to eq(@give_name)
         expect(@cruiser.length).to eq(@give_length)
         expect(@cruiser.health).to eq(@give_length)
-        expect(@cruiser.sunk?).to eq(false) 
+        expect(@cruiser.sunk?).to eq(false)
     end
 
     it 'takes a hit and checks if sunk' do
