@@ -29,14 +29,14 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.length
+    if ship.length == coordinates.count
       alph_array = []
       num_array = []
       coordinates.each do |coord|
         alph_array << coord[0]
         num_array << coord[-1]
       end
-      if (alph_array == ((alph_array[0])..(alph_array[-1])) || alph_array.uniq.count == 1) && (num_array == ((num_array[0])..(num_array[-1])) || num_array.uniq.count == 1) && (alph_array.uniq.count == 1 || num_array.uniq.count == 1)
+      if (alph_array.uniq.count == 1 || alph_array == ((alph_array[0])..(alph_array[-1])).to_a) && (num_array.uniq.count == 1 || num_array == ((num_array[0])..(num_array[-1])).to_a) && (alph_array.uniq.count == 1 || num_array.uniq.count == 1)
         true
       else
         false
