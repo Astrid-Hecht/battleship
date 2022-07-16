@@ -3,7 +3,22 @@ require './lib/cell'
 class Board
 
   attr_reader :cells
+  
   def initialize
+
+    #prep for expanding board
+    # side_size = 4
+    # coord_y = (("A".."Z").to_a)[0..(side_size-1)]
+    # grid_coords = []
+
+    # coord_y.each do |letter|
+    #   num = 0
+    #   side_size.times do
+    #     num += 1
+    #     grid_coords << letter + num.to_s
+    #   end
+    # end
+
     @cells = {
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
@@ -25,7 +40,7 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    cells.has_key?(coordinate)
+    @cells.has_key?(coordinate)
   end
 
   def coords_linear?
@@ -34,8 +49,17 @@ class Board
       (@alph_array.uniq.count == 1 || @num_array.uniq.count == 1)
   end
 
+  def overlap?(coordinates)
+    coordinates.each do |coord|
+      if @cells[coord].empty == false
+        return false
+      end
+    end
+    true
+  end
+
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.count
+    if ship.length == coordinates.count && overlap?(coordinates)
       @alph_array = []; @num_array = []
       coordinates.each do |coord|
         @alph_array << coord[0]
@@ -44,6 +68,14 @@ class Board
       coords_linear?
     else
       false
+    end
+  end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coord|
+        @cells[coord].place_ship(ship)
+      end
     end
   end
 end
