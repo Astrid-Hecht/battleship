@@ -1,4 +1,4 @@
-require './lib/ship.rb'
+require './lib/ship'
 
 class Cell
   attr_reader :coordinates, :ship, :empty, :fired_upon
@@ -24,24 +24,30 @@ class Cell
 
   def fire_upon
     @fired_upon = true
-      if @empty == false
-        @ship.hit
-      end
+    if @empty == false
+      @ship.hit
+    end
   end
 
   def render(show = false)
     if @empty == true && @fired_upon == false
-      "."
+      '.'
     elsif @empty == true && @fired_upon == true
-      "M"
+      'M'
     elsif @empty == false && @fired_upon == true && @ship.health <= 0
-      "X"
+      'X'
     elsif @empty == false && @fired_upon == true
-      "H"
-    elsif @show == true && @empty == false
-      "S"
+      'H'
+    elsif show == false && @empty == false
+      '.'
+    elsif show == true && @empty == false
+      'S'
     else
-      abort("render error")
+      abort('somethings wrong')
     end
   end
 end
+
+
+
+
