@@ -1,6 +1,5 @@
 require './lib/board'
 
-
 RSpec.describe Board do
   let(:board){Board.new}
   let(:cruiser){Ship.new("Cruiser", 3)}
