@@ -7,7 +7,7 @@ class Board
   def initialize
 
     #prep for expanding board
-    # side_size = 4
+    @side_size = 4
     # coord_y = (("A".."Z").to_a)[0..(side_size-1)]
     # grid_coords = []
 
@@ -77,5 +77,21 @@ class Board
         @cells[coord].place_ship(ship)
       end
     end
+  end
+
+  def render(show = false)
+    cell_coords = @cells.keys 
+    board_str_arr = "  " + ((("1".."30").to_a)[0..(@side_size-1)] * " ") + " \n"
+
+    cell_coords.each_with_index do |coord, index|
+      if (index % @side_size).zero?
+        board_str_arr << coord.chr + " "
+      end
+      board_str_arr << @cells[coord].render(show) + " "
+      if (index + 1) % @side_size == 0
+        board_str_arr << " \n"
+      end
+    end
+    board_str_arr
   end
 end

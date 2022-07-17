@@ -77,5 +77,16 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["A1", "B1"])).to eq(false)
     end
   end
+
+  describe '#render' do
+    it 'renders board' do
+      board.place(cruiser, ["A1", "A2", "A3"])
+      puts "\n" + "show = false" + "\n" + board.render
+      expect(board.render).to eq("  1 2 3 4 \nA . . . .  \nB . . . .  \nC . . . .  \nD . . . .  \n")
+      puts "\n" + "show = true" + "\n" + board.render(true)
+      expect(board.render(true)).to eq("  1 2 3 4 \nA S S S .  \nB . . . .  \nC . . . .  \nD . . . .  \n")
+
+    end
+  end
 end
 
