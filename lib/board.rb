@@ -3,6 +3,7 @@ require './lib/cell'
 class Board
 
   attr_reader :cells
+  attr_accessor :ships
   
   def initialize
 
@@ -37,6 +38,12 @@ class Board
       "D3" => Cell.new("D3"),
       "D4" => Cell.new("D4"),
     }
+
+    @ships = [
+      @cruiser = Ship.new('Cruiser', 3),
+      @submarine = Ship.new('Submarine', 2),
+      @destroyer = Ship.new('Destroyer', 4)
+    ]
   end
 
   def valid_coordinate?(coordinate)
@@ -76,6 +83,8 @@ class Board
       coordinates.each do |coord|
         @cells[coord].place_ship(ship)
       end
+    else
+      abort("Invalid coordinates")
     end
   end
 
