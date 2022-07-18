@@ -22,6 +22,35 @@ class Game
     end
   end #To here
 
+  def computer_place #not done!!
+    by_lengths = @board_computer.ships.sort_by { |ship| ship.length }
+    by_lengths.each do |ship|
+      rand_coord = Random.new
+      rand_orientation = Random.new #max 4
+      orientation = rand_orientation.rand(3)
+      center = @board_computer.cells[@board_computer.cells.keys(rand_coord.rand((@board_computer.side_size ** 2) - 1))]
+      coords = [center]
+      if orientation == 0 && center.chr != "A"
+        coords << ((center.ord - 1).chr + center[1]).to_s
+        orientation = 2
+      elsif orientation == 1 && center[1] != "4"
+        coords << (center.chr + (center[1].ord + 1).chr).to_s
+        orientation = 3
+      elsif orientation == 2 && center.chr != "D"
+
+      (ship.length - 1).times do 
+      end
+
+    end
+  end
+
+      if valid_placement?
+        
+      else
+        computer_place
+      end
+  end
+
   def player_place
     puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
     input = gets.chomp
@@ -45,8 +74,18 @@ class Game
     player_shoot
   end
 
+  def computer_shoot
+    rand_coord = Random.new
+    cel = @board_player.cells[@board_player.cells.keys(rand_coord.rand((@board_player.side_size ** 2) - 1))]
+    if valid_shot(cel.key, 1)
+      @board_player.cells[cel].fire_upon
+    else
+      computer_place
+    end
+  end
+
   def player_shoot
-    puts "Enter the coordinate for your shot:"
+    puts 'Enter the coordinate for your shot:'
     input = gets.chomp
     if valid_shot(input, 0)
       @board_computer.cells[input].fire_upon
@@ -58,12 +97,13 @@ class Game
 
   def valid_shot(input, who)
     players = [@board_computer, @board_player]
-    if players[who].cells[input].fired_upon = true
+    if players[who].cells[input].fired_upon = true && who == 0
       puts "This coordinate has already been fired upon. Please try again:"
+      false
+    elsif players[who].cells[input].fired_upon = true && who == 1
       false
     else
       players[who].cells.include?(input)
     end
   end
-
 end
