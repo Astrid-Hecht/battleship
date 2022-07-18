@@ -2,9 +2,9 @@ require './lib/board'
 
 class BattleshipRunner
 
+
   def initialize
-    @board_player = Board.new
-    @board_computer = Board.new
+
 
   end
 
@@ -23,7 +23,7 @@ class BattleshipRunner
   end
 
   def play
-    computer_place #Taryn navigating here 
+    computer_place #Taryn navigating here
     puts 'I have laid out my ships on the grid.'
     puts "You now need to lay out your #{@board_player.ships.length} ships."
     puts "The #{@board_player.ships[0].name} is #{@board_player.ships[0].length} units long and the #{@board_player.ships[1].name} is #{@board_player.ships[1].length} units long."
