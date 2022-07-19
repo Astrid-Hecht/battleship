@@ -58,7 +58,7 @@ class Board
 
   def overlap?(coordinates)
     coordinates.each do |coord|
-      if @cells[coord].empty == false
+      if @cells[coord].empty? == false
         return false
       end
     end
