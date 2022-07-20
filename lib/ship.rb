@@ -1,3 +1,5 @@
+require './lib/graphics'
+
 class Ship
   attr_reader :name, :length, :health, :sunk
 
@@ -6,6 +8,7 @@ class Ship
     @length = length.to_i
     @health = @length
     @sunk = false
+    @graphics_ship = Graphics.new
   end
 
   def sunk?

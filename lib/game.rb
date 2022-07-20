@@ -12,27 +12,31 @@ class Game
     @board_computer = Board.new(size, ship_set)
     @player_ships = @board_player.ships
     @computer_ships = @board_computer.ships
+    @turn_num = 1
+    @graphics_game = Graphics.new
   end
 
   def play
     place_phase
-    who_first = Rand.new.rand(0..1)
-    until @board_player == sunk || @board_computer == sunk # psuedo code, edit once taryn submits pr
+    who_first = Random.new.rand(0..1)
+    until @player_ships.all? { |ship| ship.sunk? } || @computer_ships.all? { |ship| ship.sunk? } do
       if who_first == 0
+        turn
         player_shoot
         computer_shoot
       else
         computer_shoot
+        turn
         player_shoot
       end
     end
+    end_game
+    true
   end
 
   def place_phase
     computer_place # Taryn navigating here
-    puts "\n\n\n\n\n\nI have laid out my ships on the grid.\n"
-    puts "You now need to lay out your #{@board_player.ships.length} ships."
-    puts "The #{@board_player.ships[0].name} is #{@board_player.ships[0].length} units long and the #{@board_player.ships[1].name} is #{@board_player.ships[1].length} units long."
+    @graphics_game.place_phase(@board_player)
     puts @board_player.render(true)
     @board_player.ships.each do |ship|
       until player_place(ship) == true
@@ -90,8 +94,12 @@ class Game
     puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
     input = gets.chomp
     plyr_coords = input.split(' ')
-    if @board_player.valid_placement?(ship, plyr_coords)
-      @board_player.place(ship, plyr_coords)
+    fixed_coords = []
+    plyr_coords.each do |coord|
+      fixed_coords << coord.gsub(/\d/, '').upcase + coord.gsub(/[a-zA-z]/, '')
+    end
+    if @board_player.valid_placement?(ship, fixed_coords)
+      @board_player.place(ship, fixed_coords)
       puts @board_player.render(true)
       true
     else
@@ -101,20 +109,20 @@ class Game
   end
 
   def turn
-    turn_num = 1
-    puts "Turn #{turn_num}"
+    puts "Turn #{@turn_num}"
     puts '=============COMPUTER BOARD============='
     puts @board_computer.render
     puts '==============PLAYER BOARD=============='
     puts @board_player.render(true)
-    player_shoot
+    @turn_num += 1
   end
 
   def computer_shoot
+    @graphics_game.computer_shoot_anim
     rand_coord = Random.new
-    cel = @board_player.cells[@board_player.cells.keys(rand_coord.rand((@board_player.side_size**2) - 1))]
-    if valid_shot(cel.key, 1)
-      @board_player.cells[cel].fire_upon
+    cel = @board_player.cells[@board_player.cells.keys[rand_coord.rand((@board_player.side_size**2) - 1)]]
+    if valid_shot(cel.coordinates, 1)
+      @board_player.cells[cel.coordinates].fire_upon
     else
       computer_shoot
     end
@@ -122,7 +130,7 @@ class Game
 
   def player_shoot
     puts 'Enter the coordinate for your shot:'
-    input = gets.chomp
+    input = gets.chomp.upcase
     if valid_shot(input, 0)
       @board_computer.cells[input].fire_upon
     else
@@ -133,10 +141,10 @@ class Game
 
   def valid_shot(input, who)
     players = [@board_computer, @board_player]
-    if players[who].cells[input].fired_upon == true && who == 0
-      puts 'This coordinate has already been fired upon. Please try again:'
+    if who == 0 && @board_computer.cells[input].fired_upon
+      puts 'This coordinate has already been fired upon.'
       false
-    elsif players[who].cells[input].fired_upon == true && who == 1
+    elsif who == 1 && @board_player.cells[input].fired_upon == true
       false
     else
       players[who].cells.include?(input)
@@ -158,6 +166,5 @@ class Game
     elsif @computer_ships.all? { |ship| ship.sunk? }
       p 'You won!'
     end
-    play
   end
 end
