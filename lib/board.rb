@@ -35,7 +35,6 @@ class Board
   def valid_coordinate?(coordinates)
     coordinates = [*[coordinates]].flatten
     coordinates.each do |coord|
-      #  require 'pry'; binding.pry
       if !@cells.has_key?(coord)
         return false
       end
