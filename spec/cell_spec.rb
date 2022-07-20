@@ -4,9 +4,9 @@ require 'pry'
 
 RSpec.describe Cell do
   before :each do
-    @coord = "B4"
+    @coord = 'B4'
     @cell = Cell.new(@coord)
-    @cruiser = Ship.new("Cruiser", 3)
+    @cruiser = Ship.new('Cruiser', 3)
   end
 
   it 'was created correctly' do
@@ -33,19 +33,18 @@ RSpec.describe Cell do
   end
 
   it 'can render cell symbols correctly' do
-    expect(@cell.render).to eq(".")
+    expect(@cell.render).to eq('.')
     @cell.fire_upon
-    expect(@cell.render).to eq("M")
-    cell_w_ship = Cell.new("C3")
+    expect(@cell.render).to eq('M')
+    cell_w_ship = Cell.new('C3')
     cell_w_ship.place_ship(@cruiser)
-    expect(cell_w_ship.render).to eq(".")
-    expect(cell_w_ship.render(true)).to eq("S")
+    expect(cell_w_ship.render).to eq('.')
+    expect(cell_w_ship.render(true)).to eq('S')
     cell_w_ship.fire_upon
-    expect(cell_w_ship.render).to eq("H")
+    expect(cell_w_ship.render).to eq('H')
     expect(@cruiser.sunk?).to eq(false)
-    2.times {@cruiser.hit}
+    2.times { @cruiser.hit }
     expect(@cruiser.sunk?).to eq(true)
-    expect(cell_w_ship.render).to eq("X")
+    expect(cell_w_ship.render).to eq('X')
   end
 end
-

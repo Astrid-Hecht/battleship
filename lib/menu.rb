@@ -2,8 +2,8 @@ require './lib/game'
 require './lib/graphics'
 require './lib/parameters'
 
-class Menu 
-  def initialize 
+class Menu
+  def initialize
     @game = Game.new
     @ship_set = []
     @graphics = Graphics.new
@@ -37,18 +37,18 @@ class Menu
       customize_board
     end
     @graphics.customize_ships_screen
-    @graphics.input("Would you like to customize ships? [y/n]")
+    @graphics.input('Would you like to customize ships? [y/n]')
     input2 = gets.chomp.downcase
     if @parameters.valid_side_size?(@size_input) && input2 == 'n'
       @graphics.clear_screen
-      @graphics.input("Generating new game...")
+      @graphics.input('Generating new game...')
       @game = Game.new(@size_input)
       @game.play
     elsif @parameters.valid_side_size?(@size_input) && input2 == 'y'
       customize_ships
     else
       @graphics.clear_screen
-      @graphics.input("Nope, try again")
+      @graphics.input('Nope, try again')
       sleep(3)
       customize_board
     end
@@ -73,9 +73,9 @@ class Menu
         @graphics.input('Starting custom game...')
         sleep(1.5)
         @game = Game.new(@size_input, @ship_set)
-        @game.play 
+        @game.play
       else
-        @graphics.input("Please add a ship with the following format: <name, size>")
+        @graphics.input('Please add a ship with the following format: <name, size>')
       end
     end
     input = gets.chomp.downcase.split(', ')
@@ -83,9 +83,9 @@ class Menu
     @graphics.customize_ships_screen
     if input.count == 2 && input[0].is_a?(String) && input[1].is_a?(Integer) && input[1] <= @size_input && input[1] > 0
       @ship_set << Ship.new(input[0], input[1])
-      @graphics.input("Ship added.")
+      @graphics.input('Ship added.')
     else
-      @graphics.input("Invalid input. Ship not saved, please try again.")
+      @graphics.input('Invalid input. Ship not saved, please try again.')
     end
     sleep(1.5)
     customize_ships

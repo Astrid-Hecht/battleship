@@ -1,18 +1,20 @@
 require './lib/board'
 require './lib/graphics'
-require 'pry'
 
 class Game
-  attr_accessor :player_ships_alive, :computer_ships_alive, :board_player, :board_computer, :ship_set
+  attr_accessor :board_player,
+                :board_computer,
+                :player_ships,
+                :computer_ships
 
-  def initialize(size = 4,ship_set = 'default')
+  def initialize(size = 4, ship_set = 'default')
     @board_player = Board.new(size, ship_set)
     @board_computer = Board.new(size, ship_set)
-    @player_ships_alive = @board_player.ships.count
-    @computer_ships_alive = @board_computer.ships.count
+    @player_ships = @board_player.ships
+    @computer_ships = @board_computer.ships
   end
 
-  def play 
+  def play
     place_phase
     who_first = Random.new.rand(0..1)
     until @board_player == sunk || @board_computer == sunk # psuedo code, edit once taryn submits pr
@@ -143,5 +145,23 @@ class Game
     else
       players[who].cells.include?(input)
     end
+  end
+
+  def computer_fire
+    cell = @board_player.cells.values.sample
+    if cell.fired_upon == false
+      cell.fire_upon
+    else
+      computer_fire
+    end
+  end
+
+  def end_game
+    if @player_ships.all? { |ship| ship.sunk? }
+      p 'I won!'
+    elsif @computer_ships.all? { |ship| ship.sunk? }
+      p 'You won!'
+    end
+    play
   end
 end

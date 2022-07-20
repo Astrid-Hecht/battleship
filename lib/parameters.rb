@@ -1,7 +1,5 @@
-
 class Parameters
-  def initialize
-  end
+  def initialize; end
 
   def valid_side_size?(num)
     if num >= 2 && num <= 26
@@ -10,9 +8,4 @@ class Parameters
       false
     end
   end
-
-
-
-
-
 end
