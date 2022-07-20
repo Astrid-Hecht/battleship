@@ -1,4 +1,5 @@
-
+require './lib/ship'
+require './lib/cell'
 require './lib/board'
 
 class Game
@@ -7,8 +8,16 @@ class Game
   def initialize
     @board_player = Board.new
     @board_computer = Board.new
-    @player_ships_alive = @board.ships.count
-    @computer_ships_alive = @board.ships.count
+    # @player_submarine = Ship.new("Submarine", 2)
+    # @player_cruiser = Ship.new("Cruiser", 3)
+    # @player_destroyer = Ship.new("Destroyer", 4)
+    # @comp_submarine = Ship.new("Submarine", 2)
+    # @comp_cruiser = Ship.new("Cruiser", 3)
+    # @comp_destroyer = Ship.new("Destroyer", 4)
+    # @player_ships_alive = @board_player.ships.count
+    # @computer_ships_alive = @board_computer.ships.count
+    @player_ships = @board_player.ships
+    @computer_ships = @computer_player.ships
   end
 
   def play
@@ -38,14 +47,14 @@ class Game
         orientation = 3
       elsif orientation == 2 && center.chr != "D"
 
-      (ship.length - 1).times do 
+      (ship.length - 1).times do
       end
 
     end
   end
 
       if valid_placement?
-        
+
       else
         computer_place
       end
@@ -106,4 +115,23 @@ class Game
       players[who].cells.include?(input)
     end
   end
+
+  def computer_fire
+    cell = @board_player.cells.values.sample
+    if cell.fired_upon == false
+      cell.fire_upon
+    else
+      computer_fire
+    end
+  end
+
+  def end_game
+    if @player_ships.all? { |ship| ship.sunk? }
+      p "I won!"
+    elsif @computer_ships.all? { |ship| ship.sunk? }
+      p "You won!"
+    end
+    play
+  end
+
 end
