@@ -37,7 +37,7 @@ class Game
   def place_phase
     computer_place # Taryn navigating here
     @graphics_game.place_phase(@board_player)
-    puts @board_player.render(true)
+    puts "\n" + @board_player.render(true)
     @board_player.ships.each do |ship|
       until player_place(ship) == true
       end
@@ -74,6 +74,9 @@ class Game
         start_rows = alph_array[0..wiggle_room]
       end
       start_point = start_rows[Random.new.rand(0..(start_rows.length - 1))] + start_columns[Random.new.rand(0..(start_columns.length - 1))]
+      until @board_computer.cells[start_point].empty?
+        start_point = start_rows[Random.new.rand(0..(start_rows.length - 1))] + start_columns[Random.new.rand(0..(start_columns.length - 1))]
+      end
       if orientation == 1 # ______________________ horizontal placement _________
         ship_coords = [start_point]
         (ship.length - 1).times do
@@ -111,7 +114,7 @@ class Game
   def turn
     puts "Turn #{@turn_num}"
     puts '=============COMPUTER BOARD============='
-    puts @board_computer.render
+    puts @board_computer.render(true)
     puts '==============PLAYER BOARD=============='
     puts @board_player.render(true)
     @turn_num += 1
@@ -120,7 +123,7 @@ class Game
   def player_shoot
     puts 'Enter the coordinate for your shot:'
     input = gets.chomp.upcase
-    if valid_shot(input, 0)
+    if @board_computer.valid_coordinate?(input) && valid_shot(input, 0)
       @board_computer.cells[input].fire_upon
     else
       puts 'Invalid coordinate. Please try again:'
@@ -151,10 +154,12 @@ class Game
   end
 
   def end_game
-    if @player_ships.all? { |ship| ship.sunk? }
-      'I won!'
+    if @player_ships.all? { |ship| ship.sunk? } && @computer_ships.all? { |ship| ship.sunk? }
+      "\n\n\nMutal destruction...\n You're both dead. It's a draw"
+    elsif @player_ships.all? { |ship| ship.sunk? }
+      "\n\n\nI won!"
     elsif @computer_ships.all? { |ship| ship.sunk? }
-      'You won!'
+      "\n\n\nYou won!"
     end
   end
 end

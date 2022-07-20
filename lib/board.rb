@@ -32,8 +32,15 @@ class Board
              end
   end
 
-  def valid_coordinate?(coordinate)
-    @cells.has_key?(coordinate)
+  def valid_coordinate?(coordinates)
+    coordinates = [*[coordinates]].flatten
+    coordinates.each do |coord|
+      #  require 'pry'; binding.pry
+      if !@cells.has_key?(coord)
+        return false
+      end
+    end
+    true
   end
 
   def coords_linear?
@@ -50,12 +57,16 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.uniq.count && overlap?(coordinates) == false
-      @alph_array = []
-      @num_array = []
-      coordinates.each do |coord|
-        @alph_array << coord[0]
-        @num_array << coord[-1]
+    if valid_coordinate?(coordinates) == true
+      if ship.length == coordinates.uniq.count && overlap?(coordinates) == false
+        @alph_array = []
+        @num_array = []
+        coordinates.each do |coord|
+          @alph_array << coord[0]
+          @num_array << coord[-1]
+        end
+      else 
+        false
       end
       coords_linear?
     else

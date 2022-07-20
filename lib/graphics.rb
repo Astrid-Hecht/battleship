@@ -112,8 +112,8 @@ class Graphics
   end
 
   def play_again
-    puts "\n\n+----------------------------+\n|         GOOD GAME!         |\n+----------------------------+"
-    input('Play again? [y/n]')
+    puts "\n+----------------------------+\n|         GOOD GAME!         |\n+----------------------------+"
+    puts "\n\n\nPlay again? [y/n]\n\n\n>..."
   end
 
 end
