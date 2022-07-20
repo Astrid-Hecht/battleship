@@ -57,11 +57,11 @@ class Menu
   def customize_ships
     if @ship_set == []
       @graphics.customize_ships_screen
-      @graphics.input("No ships have been added. Please add a ship with the following format: <name, size>  Example: Cruiser, 3")
+      @graphics.input("No ships have been added. Please add a ship with the following format: <name, size> \nExample: Cruiser, 3")
     elsif @ship_set.count >= 25
       @graphics.customize_ships_screen
-      @graphics.input("Ship limit reached... Generating new game")
-      sleep(2)
+      @graphics.input('Ship limit reached... Generating new game')
+      sleep(1.5)
       @game = Game.new(@size_input, @ship_set)
       @game.play
     else
@@ -70,8 +70,8 @@ class Menu
       input = gets.chomp
       @graphics.customize_ships_screen
       if input == 'n'
-        @graphics.input("Starting custom game...")
-        sleep(3)
+        @graphics.input('Starting custom game...')
+        sleep(1.5)
         @game = Game.new(@size_input, @ship_set)
         @game.play 
       else
@@ -81,13 +81,13 @@ class Menu
     input = gets.chomp.downcase.split(', ')
     input[1] = input[1].to_i
     @graphics.customize_ships_screen
-    if input.count == 2 && input[0].is_a?(String) && input[1].is_a?(Integer) && input[1] <= @size_input
+    if input.count == 2 && input[0].is_a?(String) && input[1].is_a?(Integer) && input[1] <= @size_input && input[1] > 0
       @ship_set << Ship.new(input[0], input[1])
       @graphics.input("Ship added.")
     else
       @graphics.input("Invalid input. Ship not saved, please try again.")
     end
-    sleep(2)
+    sleep(1.5)
     customize_ships
   end
 
