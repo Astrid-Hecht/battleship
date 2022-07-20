@@ -101,7 +101,8 @@ class Menu
     input = gets.chomp.downcase.split(', ')
     input[1] = input[1].to_i
     @graphics.customize_ships_screen
-    if input.count == 2 && input[0].is_a?(String) && input[1].is_a?(Integer) && input[1] <= @size_input && input[1] > 0
+    # if input.count == 2 && input[0].is_a?(String) && input[1].is_a?(Integer) && input[1] <= @size_input && input[1] > 0
+    if @parameters.valid_ship?(input, @size_input)
       @ship_set << Ship.new(input[0], input[1])
       @graphics.input('Ship added.')
     else

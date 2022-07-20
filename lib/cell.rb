@@ -25,15 +25,21 @@ class Cell
     @empty = false
   end
 
-  def fire_upon
+  def fire_upon(anim = true)
     @fired_upon = true
-    if @empty == false
-      @ship.hit
-      @graphics_cell.hit_anim(self.ship.name)
-    else
-      @graphics_cell.miss_anim
+    if anim == false
+      if @empty == false
+        @ship.hit
+      end
+    elsif anim == true
+      if @empty == false
+        @ship.hit
+        @graphics_cell.hit_anim(self.ship.name)
+      else
+        @graphics_cell.miss_anim
+      end
+      @graphics_cell.sunk_anim if @empty == false && @ship.sunk?
     end
-    @graphics_cell.sunk_anim(@ship.name) if @empty == false && @ship.sunk?
   end
 
   def render(show = false)
@@ -49,8 +55,6 @@ class Cell
       '.'
     elsif show == true && @empty == false
       'S'
-    else
-      abort('somethings wrong')
     end
   end
 end

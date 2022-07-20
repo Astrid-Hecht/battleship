@@ -23,14 +23,14 @@ class Game
       if who_first == 0
         turn
         player_shoot
-        computer_shoot
+        computer_fire
       else
-        computer_shoot
+        computer_fire
         turn
         player_shoot
       end
     end
-    end_game
+    puts end_game
     true
   end
 
@@ -117,17 +117,6 @@ class Game
     @turn_num += 1
   end
 
-  def computer_shoot
-    @graphics_game.computer_shoot_anim
-    rand_coord = Random.new
-    cel = @board_player.cells[@board_player.cells.keys[rand_coord.rand((@board_player.side_size**2) - 1)]]
-    if valid_shot(cel.coordinates, 1)
-      @board_player.cells[cel.coordinates].fire_upon
-    else
-      computer_shoot
-    end
-  end
-
   def player_shoot
     puts 'Enter the coordinate for your shot:'
     input = gets.chomp.upcase
@@ -151,10 +140,11 @@ class Game
     end
   end
 
-  def computer_fire
+  def computer_fire(anim = true)
+    @graphics_game.computer_shoot_anim(anim)
     cell = @board_player.cells.values.sample
     if cell.fired_upon == false
-      cell.fire_upon
+      cell.fire_upon(anim)
     else
       computer_fire
     end
@@ -162,9 +152,9 @@ class Game
 
   def end_game
     if @player_ships.all? { |ship| ship.sunk? }
-      p 'I won!'
+      'I won!'
     elsif @computer_ships.all? { |ship| ship.sunk? }
-      p 'You won!'
+      'You won!'
     end
   end
 end
