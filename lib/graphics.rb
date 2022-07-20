@@ -50,6 +50,7 @@ class Graphics
     sleep(1)
     clear_screen
     puts "\n\n\n***************************\n          !!HIT!!\n***************************\n\n\n\n\n\n\n"
+    sleep(2)
   end
 
   def miss_anim
@@ -58,7 +59,6 @@ class Graphics
     wave_impact1 = "             |\\**/|\n             \\ == /\n              |  |\n              |  |\n              \\  /\n,(   ,(   ,(   \\/   ,(   ,(   ,(   ,(\n  `-'  `-'  `-'  `-'  `-'  `-'  `-'  `-'\n"
     wave_impact2 = "             |\\**/|\n             \\ == /\n              |  |\n              |  |\n,(   ,(   ,(  \\  /   ,(   ,(   ,(   ,(\n  `-'  `-'  `-'\\/`-'  `-'  `-'  `-'  `-'\n"
     sploosh = "   ,    .  ). (  .  )(. o  . (    ,   '\n'    . o  |.o~ ~~0|   ~ o . | .     .    .\n  .      o |o~ o% .   / % .| o  ,\n      ,     0 % O  | .  o | .\n         o  |  )  0    %  (  .\n             |  o    (.  |\n              |    ,    |\n               ) \   ' (\n ,(   ,(   ,(   )   / (   ,(   ,(   ,(\n   `-'  `-'  `-'       `-'  `-'  `-'  `-'\n"
-
     (hit_anim.count - 1).times do
       clear_screen
       puts hit_anim.join
@@ -77,6 +77,6 @@ class Graphics
     sleep(1.5)
     clear_screen
     puts "\n\n\n***************************\n           MISS\n***************************\n\n\n\n\n\n\n"
+    sleep(2)
   end
-
 end

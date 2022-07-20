@@ -89,8 +89,12 @@ class Game
     puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
     input = gets.chomp
     plyr_coords = input.split(' ')
-    if @board_player.valid_placement?(ship, plyr_coords)
-      @board_player.place(ship, plyr_coords)
+    fixed_coords = []
+    plyr_coords.each do |coord|
+      fixed_coords << coord.gsub(/\d/, '').upcase + coord.gsub(/[a-zA-z]/, '')
+    end
+    if @board_player.valid_placement?(ship, fixed_coords)
+      @board_player.place(ship, fixed_coords)
       puts @board_player.render(true)
       true
     else
