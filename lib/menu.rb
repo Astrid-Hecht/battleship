@@ -16,14 +16,34 @@ class Menu
     if input.downcase == 'q'
       quit
     elsif input.downcase == 'p'
-      @game.play
+      play
     elsif input.downcase == 'c'
       customize_board
     else
       @graphics.clear_screen
       @graphics.input('Input not recognized, try again.')
-      sleep(2)
+      sleep(1.5)
       start
+    end
+  end
+
+  def play
+    @game.play
+    want_play_again
+  end
+  
+  def want_play_again 
+    @graphics.play_again
+    input = gets.chomp
+    if input.downcase == 'y'
+      @game = Game.new
+      @ship_set = []
+      start
+    elsif input.downcase == 'n'
+      quit
+    else
+      puts 'Input not recognized, try again:'
+      want_play_again
     end
   end
 
@@ -49,7 +69,7 @@ class Menu
     else
       @graphics.clear_screen
       @graphics.input('Nope, try again')
-      sleep(3)
+      sleep(1.5)
       customize_board
     end
   end
@@ -66,7 +86,7 @@ class Menu
       @game.play
     else
       @graphics.customize_ships_screen
-      @graphics.input("Current ship set: #{@ship_set}\n Would you like to add another ship? [y/n]")
+      @graphics.input("Current ship set: #{@ship_set}\n\n Would you like to add another ship? [y/n]")
       input = gets.chomp
       @graphics.customize_ships_screen
       if input == 'n'
@@ -87,7 +107,7 @@ class Menu
     else
       @graphics.input('Invalid input. Ship not saved, please try again.')
     end
-    sleep(1.5)
+    sleep(0.5)
     customize_ships
   end
 

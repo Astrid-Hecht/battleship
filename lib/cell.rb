@@ -1,4 +1,5 @@
 require './lib/ship'
+require './lib/graphics'
 
 class Cell
   attr_reader :coordinates, :ship, :empty, :fired_upon
@@ -8,6 +9,7 @@ class Cell
     @ship = nil
     @empty = true
     @fired_upon = false
+    @graphics_cell = Graphics.new
   end
 
   def empty?
@@ -25,7 +27,13 @@ class Cell
 
   def fire_upon
     @fired_upon = true
-    @ship.hit if @empty == false
+    if @empty == false
+      @ship.hit
+      @graphics_cell.hit_anim(self.ship.name)
+    else
+      @graphics_cell.miss_anim
+    end
+    @graphics_cell.sunk_anim(@ship.name) if @empty == false && @ship.sunk?
   end
 
   def render(show = false)
