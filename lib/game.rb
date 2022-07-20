@@ -1,15 +1,17 @@
 require './lib/board'
 require './lib/graphics'
-require 'pry'
 
 class Game
-  attr_accessor :player_ships_alive, :computer_ships_alive, :board_player, :board_computer, :ship_set
+  attr_accessor :board_player,
+                :board_computer,
+                :player_ships,
+                :computer_ships
 
-  def initialize(size = 4,ship_set = 'default')
+  def initialize(size = 4, ship_set = 'default')
     @board_player = Board.new(size, ship_set)
     @board_computer = Board.new(size, ship_set)
-    @player_ships_alive = @board_player.ships.count
-    @computer_ships_alive = @board_computer.ships.count
+    @player_ships = @board_player.ships
+    @computer_ships = @board_computer.ships
   end
 
   def play
@@ -24,7 +26,6 @@ class Game
         player_shoot
       end
     end
-
   end
 
   def place_phase
@@ -153,11 +154,10 @@ class Game
 
   def end_game
     if @player_ships.all? { |ship| ship.sunk? }
-      p "I won!"
+      p 'I won!'
     elsif @computer_ships.all? { |ship| ship.sunk? }
-      p "You won!"
+      p 'You won!'
     end
     play
   end
-
 end

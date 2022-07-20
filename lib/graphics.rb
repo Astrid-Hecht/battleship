@@ -1,7 +1,5 @@
 class Graphics
-
-  def initialize
-  end
+  def initialize; end
 
   def menu_screen
     clear_screen
@@ -15,12 +13,11 @@ class Graphics
 
   def customize_board_screen
     puts "\n\n+-----------------------------+\n|       Customize Board       |\n+-----------------------------+\n\n"
-    input("Enter board side size (default = 4):")
+    input('Enter board side size (default = 4):')
   end
 
   def customize_ships_screen
     puts "\n\n+-----------------------------+\n|       Customize Ships       |\n+-----------------------------+\n\n"
-    
   end
 
   def input(text)
@@ -32,12 +29,12 @@ class Graphics
   end
 
   def hit_anim(name = 'destroyer')
-    hit_anim = ["             |\\**/|\n             \\ == /\n              |  |\n              |  |\n              \\  /\n               \\/", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n" ]
+    hit_anim = [
+      "             |\\**/|\n             \\ == /\n              |  |\n              |  |\n              \\  /\n               \\/", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n"
+    ]
     sub = "~~~~~~~~~~~~~~|_~~~~~~~~~~~~~~~~~\n         _____|~ |____ \n       (  --         ~~~~--_, \n        ~~~~~~~~~~~~~~~~~~~'`"
     ship = "                                  # #  ( )\n                               ___#_#___|__\n                           _  |____________|  _\n                    _=====| | |            | | |==== _\n              =====| |.---------------------------. | |====\n<--------------------'   .  .  .  .  .  .  .  .   '--------------/\n  \                                                             /\n   \_______________________________________________WWS_________/"
-    if name.downcase == 'submarine' 
-      ship = sub
-    end
+    ship = sub if name.downcase == 'submarine'
     (hit_anim.count - 1).times do
       clear_screen
       puts hit_anim.join
@@ -53,7 +50,9 @@ class Graphics
   end
 
   def miss_anim
-    hit_anim = ["             |\\**/|\n             \\ == /\n              |  |\n              |  |\n              \\  /\n               \\/", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n" ]
+    hit_anim = [
+      "             |\\**/|\n             \\ == /\n              |  |\n              |  |\n              \\  /\n               \\/", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n"
+    ]
     wave = ",(   ,(   ,(   ,(   ,(   ,(   ,(   ,(\n  `-'  `-'  `-'  `-'  `-'  `-'  `-'  `-'"
     wave_impact1 = "             |\\**/|\n             \\ == /\n              |  |\n              |  |\n              \\  /\n,(   ,(   ,(   \\/   ,(   ,(   ,(   ,(\n  `-'  `-'  `-'  `-'  `-'  `-'  `-'  `-'\n"
     wave_impact2 = "             |\\**/|\n             \\ == /\n              |  |\n              |  |\n,(   ,(   ,(  \\  /   ,(   ,(   ,(   ,(\n  `-'  `-'  `-'\\/`-'  `-'  `-'  `-'  `-'\n"
@@ -78,5 +77,4 @@ class Graphics
     clear_screen
     puts "\n\n\n***************************\n           MISS\n***************************\n\n\n\n\n\n\n"
   end
-
 end

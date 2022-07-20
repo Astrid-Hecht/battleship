@@ -1,7 +1,7 @@
 require './lib/menu'
 
 class BattleshipRunner
-  def initialize 
+  def initialize
     @menu = Menu.new
   end
 

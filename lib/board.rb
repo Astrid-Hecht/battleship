@@ -1,13 +1,12 @@
 require './lib/cell'
 
 class Board
-
   attr_reader :cells
   attr_accessor :ships, :side_size
 
   def initialize(size = 4, ship_set = 'default')
     @side_size = size
-    coord_y = (("A".."Z").to_a)[0..(@side_size-1)]
+    coord_y = ('A'..'Z').to_a[0..(@side_size - 1)]
     grid_coords = []
 
     coord_y.each do |letter|
@@ -23,14 +22,14 @@ class Board
       @cells.store(coord, Cell.new(coord))
     end
 
-    if ship_set == 'default'
-      @ships = [
-        @cruiser = Ship.new('Cruiser', 3),
-        @submarine = Ship.new('Submarine', 2)
-      ]
-    else
-      @ships = ship_set
-    end
+    @ships = if ship_set == 'default'
+               [
+                 @cruiser = Ship.new('Cruiser', 3),
+                 @submarine = Ship.new('Submarine', 2)
+               ]
+             else
+               ship_set
+             end
   end
 
   def valid_coordinate?(coordinate)
@@ -45,16 +44,15 @@ class Board
 
   def overlap?(coordinates)
     coordinates.each do |coord|
-      if @cells[coord].empty? == false
-        return true
-      end
+      return true if @cells[coord].empty? == false
     end
     false
   end
 
   def valid_placement?(ship, coordinates)
     if ship.length == coordinates.uniq.count && overlap?(coordinates) == false
-      @alph_array = []; @num_array = []
+      @alph_array = []
+      @num_array = []
       coordinates.each do |coord|
         @alph_array << coord[0]
         @num_array << coord[-1]
@@ -75,16 +73,12 @@ class Board
 
   def render(show = false)
     cell_coords = @cells.keys
-    board_str_arr = "  " + ((("1".."30").to_a)[0..(@side_size-1)] * " ") + " \n"
+    board_str_arr = '  ' + (('1'..'30').to_a[0..(@side_size - 1)] * ' ') + " \n"
 
     cell_coords.each_with_index do |coord, index|
-      if (index % @side_size).zero?
-        board_str_arr << coord.chr + " "
-      end
-      board_str_arr << @cells[coord].render(show) + " "
-      if (index + 1) % @side_size == 0
-        board_str_arr << " \n"
-      end
+      board_str_arr << coord.chr + ' ' if (index % @side_size).zero?
+      board_str_arr << @cells[coord].render(show) + ' '
+      board_str_arr << " \n" if (index + 1) % @side_size == 0
     end
     board_str_arr
   end
