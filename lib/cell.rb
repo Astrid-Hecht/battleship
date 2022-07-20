@@ -33,7 +33,7 @@ class Cell
     else
       @graphics_cell.miss_anim
     end
-    @graphics_cell.sunk_anim(@ship.name) if @empty == false && @ship.sunk?
+    @graphics_cell.sunk_anim if @empty == false && @ship.sunk?
   end
 
   def render(show = false)
@@ -49,8 +49,6 @@ class Cell
       '.'
     elsif show == true && @empty == false
       'S'
-    else
-      abort('somethings wrong')
     end
   end
 end
