@@ -27,7 +27,7 @@ class Menu
     end
   end
 
-  def customize_board                       
+  def customize_board
     @graphics.customize_board_screen
     @size_input = gets.chomp.to_i
     if @parameters.valid_side_size?(@size_input) == false

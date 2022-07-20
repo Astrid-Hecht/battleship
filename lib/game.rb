@@ -14,7 +14,7 @@ class Game
 
   def play 
     place_phase
-    who_first = Rand.new.rand(0..1)
+    who_first = Random.new.rand(0..1)
     until @board_player == sunk || @board_computer == sunk # psuedo code, edit once taryn submits pr
       if who_first == 0
         player_shoot
@@ -24,7 +24,6 @@ class Game
         player_shoot
       end
     end
-
   end
 
   def place_phase
