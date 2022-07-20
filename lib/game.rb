@@ -114,7 +114,7 @@ class Game
   def turn
     puts "Turn #{@turn_num}"
     puts '=============COMPUTER BOARD============='
-    puts @board_computer.render(true)
+    puts @board_computer.render
     puts '==============PLAYER BOARD=============='
     puts @board_player.render(true)
     @turn_num += 1
