@@ -101,7 +101,7 @@ class Graphics
     sleep(1.5)
   end
 
-  def sunk_anim(name = 'cruiser')
+  def sunk_anim
     clear_screen
     puts "\n\n\n***************************\n         SHIP SUNK\n***************************\n\n\n\n\n\n\n"
     sleep(1)
