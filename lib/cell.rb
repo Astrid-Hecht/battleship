@@ -4,10 +4,10 @@ require './lib/graphics'
 class Cell
   attr_reader :coordinates, :ship, :empty, :fired_upon
 
-  def initialize(coord)
+  def initialize(coord, empty=true)
     @coordinates = coord
     @ship = nil
-    @empty = true
+    @empty = empty
     @fired_upon = false
     @graphics_cell = Graphics.new
   end
