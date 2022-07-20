@@ -43,7 +43,8 @@ class Graphics
     puts ship_info.join + "\n\n"
   end
 
-  def computer_shoot_anim
+  def computer_shoot_anim(show = true)
+    return if show == false
     clear_screen
     puts "\n\n\n***************************\n       COMPUTER TURN\n***************************\n\n\n\n\n\n\n"
     sleep(1.5)

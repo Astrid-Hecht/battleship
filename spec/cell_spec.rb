@@ -27,20 +27,20 @@ RSpec.describe Cell do
   it 'can detect if fired upon' do
     @cell.place_ship(@cruiser)
     expect(@cell.fired_upon?).to eq(false)
-    @cell.fire_upon
+    @cell.fire_upon(false)
     expect(@cell.ship.health).to eq(2)
     expect(@cell.fired_upon?).to eq(true)
   end
 
   it 'can render cell symbols correctly' do
     expect(@cell.render).to eq('.')
-    @cell.fire_upon
+    @cell.fire_upon(false)
     expect(@cell.render).to eq('M')
     cell_w_ship = Cell.new('C3')
     cell_w_ship.place_ship(@cruiser)
     expect(cell_w_ship.render).to eq('.')
     expect(cell_w_ship.render(true)).to eq('S')
-    cell_w_ship.fire_upon
+    cell_w_ship.fire_upon(false)
     expect(cell_w_ship.render).to eq('H')
     expect(@cruiser.sunk?).to eq(false)
     2.times { @cruiser.hit }
