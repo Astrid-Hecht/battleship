@@ -101,7 +101,7 @@ class Game
     plyr_coords.each do |coord|
       fixed_coords << coord.gsub(/\d/, '').upcase + coord.gsub(/[a-zA-z]/, '')
     end
-    if @board_player.valid_placement?(ship, fixed_coords)
+    if ship.length == fixed_coords.count && @board_player.valid_placement?(ship, fixed_coords)
       @board_player.place(ship, fixed_coords)
       puts @board_player.render(true)
       true
